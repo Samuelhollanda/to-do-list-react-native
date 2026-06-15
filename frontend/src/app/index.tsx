@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'expo-router';
 import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
-import { api } from '../services/api'; // Ajuste o caminho se a sua pasta src estiver noutro local
+import { api } from '../services/api';
+import dayjs from 'dayjs'
 
 // 1. Tipagem (TypeScript) - Exatamente igual ao modelo do Prisma!
 interface Task {
@@ -9,6 +10,8 @@ interface Task {
   title: string;
   description: string | null;
   isCompleted: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export default function HomeScreen() {
@@ -75,6 +78,11 @@ export default function HomeScreen() {
         renderItem={({ item }) => (
           <View style={styles.taskCard}>
             <Text style={styles.taskTitle}>{item.title}</Text>
+
+            {/* 2. A MÁGICA ACONTECE AQUI */}
+              <Text>
+                Criado em: {dayjs(item.createdAt).format('DD/MM/YYYY [às] HH:mm')}
+              </Text>
             
             {item.description && (
               <Text style={styles.taskDesc}>{item.description}</Text>
