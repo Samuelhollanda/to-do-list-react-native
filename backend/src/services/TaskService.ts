@@ -21,4 +21,10 @@ export class TaskService {
             data: { isCompleted },
         });
     }
+
+    async delete(id: string) {
+        return await prisma.task.delete({
+            where: { id },
+        });
+    }
 }

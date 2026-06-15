@@ -44,4 +44,16 @@ export class TaskController {
             return res.status(500).json({ error: 'Erro interno ao atualizar a tarefa.' });
         }
     }
+
+    async delete(req: Request, res: Response) {
+        try {
+            const id = req.params.id as string;
+
+            await taskService.delete(id);
+
+            return res.status(204).send();
+        } catch (error) {
+            return res.status(500).json({ error: 'Erro interno ao deletar a tarefa.' });
+        }
+    }
 }
