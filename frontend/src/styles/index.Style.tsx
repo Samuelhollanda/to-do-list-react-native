@@ -71,6 +71,23 @@ const styles = StyleSheet.create({
     color: '#888',
     fontSize: 16,
     marginTop: 20,
+  },
+  buttonsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 15,
+  },
+  deleteButton: {
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    backgroundColor: '#ffebee',
+    borderRadius: 5,
+  },
+  deleteText: {
+    color: '#d32f2f',
+    fontWeight: 'bold',
+    fontSize: 14,
   }
 });
 

@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, } from 'react';
 import { Link, useFocusEffect } from 'expo-router';
-import { View, Text, FlatList, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, Alert, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { api } from '../services/api';
 import type Task from '../types/task';
 import styles from '../styles/index.Style';
@@ -8,11 +8,9 @@ import RenderTask from '@/components/RenderTask';
 
 
 export default function HomeScreen() {
-  // 2. Estados da nossa aplicação
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // 3. Função para ir buscar as tarefas à API
   async function fetchTasks() {
     try {
       const response = await api.get('/tasks');
@@ -21,11 +19,10 @@ export default function HomeScreen() {
       console.error("❌ Erro ao buscar tarefas:", error);
       alert("Não foi possível carregar as tarefas. Verifique a ligação com a API.");
     } finally {
-      setLoading(false); // Desliga o "loading" quer dê sucesso ou erro
+      setLoading(false);
     }
   }
 
-  // 4. O useEffect chama a função fetchTasks assim que o ecrã abre
   useFocusEffect(
     useCallback(() => {
       fetchTasks();
@@ -34,10 +31,8 @@ export default function HomeScreen() {
 
   async function handleToggle(id: string, currentStatus: boolean) {
     try {
-      // Envia o status inverso do atual (se era true, envia false, e vice-versa)
       await api.patch(`/tasks/${id}/toggle`, { isCompleted: !currentStatus });
 
-      // Recarrega a lista para mostrar a mudança no ecrã
       fetchTasks();
     } catch (error) {
       console.error("❌ Erro ao atualizar tarefa:", error);
@@ -45,7 +40,29 @@ export default function HomeScreen() {
     }
   }
 
-  // 5. O que mostrar enquanto os dados não chegam
+  function handleDelete(id: string) {
+    Alert.alert(
+      "Excluir Tarefa",
+      "Tem certeza que deseja excluir esta tarefa de forma permanente?",
+      [
+        { text: "Cancelar", style: "cancel" },
+        { 
+          text: "Sim, Excluir", 
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await api.delete(`/tasks/${id}`);
+              fetchTasks();
+            } catch (error) {
+              console.error("❌ Erro ao deletar tarefa:", error);
+              Alert.alert("Erro", "Não foi possível excluir a tarefa.");
+            }
+          }
+        }
+      ]
+    );
+  }
+
   if (loading) {
     return (
       <View style={styles.centered}>
@@ -55,12 +72,10 @@ export default function HomeScreen() {
     );
   }
 
-  // 6. O ecrã principal com a FlatList
   return (
     <View style={styles.container}>
       <Text style={styles.headerTitle}>Minhas Tarefas</Text>
 
-      {/* 2. ADICIONE O LINK DE NAVEGAÇÃO AQUI */}
       <Link href="/create" asChild>
         <TouchableOpacity style={styles.addButton}>
           <Text style={styles.addButtonText}>+ Nova</Text>
@@ -70,8 +85,7 @@ export default function HomeScreen() {
       <FlatList
         data={tasks}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <RenderTask task={item} onToggle={handleToggle}/>}
-        // O que mostrar se a base de dados estiver vazia
+        renderItem={({ item }) => <RenderTask task={item} onToggle={handleToggle} onDelete={handleDelete}/>}
         ListEmptyComponent={
           <Text style={styles.emptyText}>Nenhuma tarefa cadastrada ainda.</Text>
         }

@@ -4,11 +4,12 @@ import dayjs from 'dayjs'
 import type Task from '@/types/task'
 
 interface RenderTasksProps {
-    task: Task,
+    task: Task;
     onToggle: (id: string, currentStatus: boolean) => void;
+    onDelete: (id: string) => void,
 }
 
-const RenderTask = ({ task, onToggle}: RenderTasksProps) => {
+const RenderTask = ({ task, onToggle, onDelete}: RenderTasksProps) => {
 
     return (
         <View style={styles.taskCard}>
@@ -23,15 +24,25 @@ const RenderTask = ({ task, onToggle}: RenderTasksProps) => {
                 <Text style={styles.taskDesc}>{task.description}</Text>
             )}
 
-            {/* TRANSFORMÁMOS O TEXTO NUM BOTÃO CLICÁVEL */}
-            <TouchableOpacity
-                style={styles.statusButton}
-                onPress={() => onToggle(task.id, task.isCompleted)}
-            >
-                <Text style={styles.taskStatus}>
-                    {task.isCompleted ? "✅ Concluída (Clique para reabrir)" : "⏳ Pendente (Clique para concluir)"}
-                </Text>
-            </TouchableOpacity>
+            <View style={styles.buttonsRow}>
+        <TouchableOpacity 
+          style={styles.statusButton} 
+          onPress={() => onToggle(task.id, task.isCompleted)}
+        >
+          <Text style={styles.taskStatus}>
+            {task.isCompleted ? "✅ Concluída" : "⏳ Pendente"}
+          </Text>
+        </TouchableOpacity>
+
+        {/* 3. O BOTÃO DE DELETAR */}
+        <TouchableOpacity 
+          style={styles.deleteButton} 
+          onPress={() => onDelete(task.id)
+          }
+        >
+          <Text style={styles.deleteText}>🗑️ Excluir</Text>
+        </TouchableOpacity>
+      </View>
         </View>
     )
 }
