@@ -12,15 +12,9 @@
       "distribution": "internal",
       "android": {
         "buildType": "apk"
-      },
-      "env": {
-        "EXPO_PUBLIC_API_URL": "SUBSTITUIR_PELO_RENDER"
       }
     },
     "production": {
-      "env": {
-        "EXPO_PUBLIC_API_URL": "SUBSTITUIR_PELO_RENDER"
-      },
       "autoIncrement": true
     }
   },
