@@ -15,7 +15,6 @@ const RenderTask = ({ task, onToggle, onDelete}: RenderTasksProps) => {
         <View style={styles.taskCard}>
             <Text style={styles.taskTitle}>{task.title}</Text>
 
-            {/* 2. A MÁGICA ACONTECE AQUI */}
             <Text>
                 Criado em: {dayjs(task.createdAt).format('DD/MM/YYYY [às] HH:mm')}
             </Text>
@@ -34,7 +33,6 @@ const RenderTask = ({ task, onToggle, onDelete}: RenderTasksProps) => {
           </Text>
         </TouchableOpacity>
 
-        {/* 3. O BOTÃO DE DELETAR */}
         <TouchableOpacity 
           style={styles.deleteButton} 
           onPress={() => onDelete(task.id)

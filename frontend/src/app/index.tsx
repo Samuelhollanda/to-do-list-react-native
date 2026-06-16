@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState, } from 'react';
+import { useCallback, useState, } from 'react';
 import { Link, useFocusEffect } from 'expo-router';
 import { View, Text, FlatList, Alert, ActivityIndicator, TouchableOpacity } from 'react-native';
-import { api } from '../services/api';
-import type Task from '../types/task';
-import styles from '../styles/index.Style';
+import { api } from '@/services/api';
+import type Task from '@/types/task';
+import styles from '@/styles/index.Style';
 import RenderTask from '@/components/RenderTask';
 
 

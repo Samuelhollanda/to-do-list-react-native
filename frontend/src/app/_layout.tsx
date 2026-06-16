@@ -5,17 +5,15 @@ export default function Layout() {
     <Stack
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#007AFF', // Cor de fundo do cabeçalho global
+          backgroundColor: '#007AFF'
         },
-        headerTintColor: '#fff', // Cor do texto do cabeçalho
+        headerTintColor: '#fff',
         headerTitleStyle: {
           fontWeight: 'bold',
         },
       }}
     >
-      {/* Define o ecrã inicial e o título dele */}
       <Stack.Screen name="index" options={{ title: 'Minhas Tarefas' }} />
-      {/* Define o ecrã de criação como um modal ou ecrã comum */}
       <Stack.Screen name="create" options={{ title: 'Nova Tarefa', presentation: 'modal' }} />
     </Stack>
   );
