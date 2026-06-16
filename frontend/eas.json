@@ -14,10 +14,13 @@
         "buildType": "apk"
       },
       "env": {
-        "EXPO_PUBLIC_API_URL": "http://192.168.3.231:3000/api"
+        "EXPO_PUBLIC_API_URL": "SUBSTITUIR_PELO_RENDER"
       }
     },
     "production": {
+      "env": {
+        "EXPO_PUBLIC_API_URL": "SUBSTITUIR_PELO_RENDER"
+      },
       "autoIncrement": true
     }
   },
