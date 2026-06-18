@@ -17,6 +17,7 @@ services:
     build: 
       context: ./backend
       dockerfile: Dockerfile
+      target: development
     ports:
       - ${API_PORTS}:${API_PORTS}
     environment:
